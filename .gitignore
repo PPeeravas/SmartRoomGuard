@@ -1,6 +1,10 @@
 # Project
 temp/
 
+# Environment
+.env*
+!.env.example
+
 # NUCLEO
 /firmware/Debug/
 /firmware/Release/
