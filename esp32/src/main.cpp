@@ -6,11 +6,18 @@
 WiFiClient wifi;
 PubSubClient mqtt(wifi);
 
+void onMessage(char* topic, byte* payload, unsigned int length) {
+  String msg;
+  for (unsigned int i = 0; i < length; i++) msg += (char)payload[i];
+  Serial.printf("%s -> %s\n", topic, msg.c_str());
+}
+
 void connectMqtt() {
   while (!mqtt.connected()) {
-    Serial.print("MQTT connecting...");
+    Serial.println("MQTT connecting...");
     if (mqtt.connect(NETPIE_CLIENT_ID, NETPIE_TOKEN, NETPIE_SECRET)) {
       Serial.println("connected");
+      mqtt.subscribe("@msg/cmd");
     } else {
       Serial.printf("failed, rc=%d\n", mqtt.state());
       delay(2000);
@@ -31,10 +38,18 @@ void setup() {
   Serial.print("\nIP: ");
   Serial.println(WiFi.localIP());
   mqtt.setServer("mqtt.netpie.io", 1883);
+  mqtt.setCallback(onMessage);
 }
 
+unsigned long lastPublishMs = 0;
 
 void loop() {
-  connectMqtt();  // reconnects if dropped
-  mqtt.loop();    // keeps the connection alive; must run often
+  connectMqtt();
+  mqtt.loop();
+
+  if (millis() - lastPublishMs >= 2000) {  // every 2 s, without blocking
+    lastPublishMs = millis();
+    mqtt.publish("@shadow/data/update",
+                 "{\"data\":{\"state\":\"ARMED\",\"door\":0,\"dist\":676}}");
+  }
 }
