@@ -18,10 +18,22 @@ A small IoT alarm for a door, drawer, or box lid. An STM32 Nucleo-F411RE reads t
 
 Five states, all kept on the STM32 (the alarm still works if WiFi drops):
 
-`DISARMED → ARMING (10 s) → ARMED → ALARM → SILENCED`
+```mermaid
+stateDiagram-v2
+    direction TB
+    [*] --> DISARMED
+    DISARMED --> ARMING: B1 or UART ARM
+    ARMING --> ARMED: After 10 seconds, door closed
+    ARMING --> ALARM: After 10 seconds, door open
+    ARMED --> ALARM: Reed switch detects door opening
+    ALARM --> SILENCED: UART SILENCE
+    ARMED --> DISARMED: B1 or UART DISARM
+    ALARM --> DISARMED: B1 or UART DISARM
+    SILENCED --> DISARMED: B1 or UART DISARM
+```
 
 - **Arm:** button or phone. 10 s to leave.
-- **Door opens while armed:** straight to ALARM. The reed switch is the only alarm trigger.
+- **Alarm:** The reed switch triggers ALARM if the door is open when the 10-second countdown ends or if it opens while armed. Closing the door leaves the alarm active and the buzzer beeping.
 - **Distance:** measured and sent to the phone in every state. It never triggers the alarm.
 - **Silence:** phone only. ALARM → SILENCED: buzzer off, alarm still on record, door still counted as breached.
 - **Disarm:** button or phone, from ARMED, ALARM or SILENCED. Disarm from the phone before opening the door to avoid a false alarm.
