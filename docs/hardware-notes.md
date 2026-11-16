@@ -12,5 +12,9 @@ Draft pin map. Confirm in CubeMX before wiring.
 | Buzzer | PB4 |
 
 - Avoid PA2/PA3 (USART2, used by the ST-Link USB).
-- Phone hotspot must be 2.4 GHz for the ESP8266.
+- Phone hotspot must be 2.4 GHz for the ESP32.
 - All grounds connected together.
+
+# Specification
+STM32 board = NUCLEO-F411RE \
+NodeMCU = ESP32-S3-N16R8

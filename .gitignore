@@ -1,3 +1,11 @@
+# Project
+temp/
+
+# NUCLEO
 /firmware/Debug/
 /firmware/Release/
 /firmware/*.launch
+
+# ESP32
+/esp32/.pio/
+/esp32/include/secrets.h
