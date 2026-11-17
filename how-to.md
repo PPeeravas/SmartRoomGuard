@@ -9,6 +9,7 @@ TODO: Peem add instruction for nucleo project setup
 
 Project: `esp32/` (VS Code + PlatformIO, Arduino framework)
 
+**Installation**
 1. Install the VS Code extension `PlatformIO IDE`. Restart VS Code and wait for the 🏠 icon in the status bar.
 2. Allow access to the USB serial port (one time only):
    ```bash
@@ -20,10 +21,12 @@ Project: `esp32/` (VS Code + PlatformIO, Arduino framework)
    # Windows
    ## Nothings todo
    ```
-3. Go to File → Open Folder → `SmartRoomGuard/esp32`
-4. Open any project file (e.g. `src/main.cpp`). Buttons at the editor's top-right:
-   - `✓` Build (first build downloads the toolchain, a few minutes)
-   - `˅` next to ✓ → `Upload`
+**Build and Upload**
+1. Go to `PIO Home → Quick Access: Open Project → SmartRoomGuard/esp32`
+2. Open any project file (e.g. `src/main.cpp`). Buttons at the editor's **top-right**
+   - `✓` Build (Ctrl+Alt+B) (first build downloads the toolchain, a few minutes)
+   - `˅` next to ✓ → `Upload` (Ctrl+Alt+U)
    - `🔌` Serial Monitor
-   - Same actions: 👽 PlatformIO sidebar → Project Tasks → esp32-s3-devkitc-1 → General
-5. Plug in the board using the USB-C port labelled `COM`. Build → Upload → 🔌 Serial Monitor
+   - [Optional] Same actions: 👽 PlatformIO sidebar → Project Tasks → esp32-s3-devkitc-1 → General → click the menu
+3. Plug in the board using the USB-C port labelled `COM` \
+   Build → Upload → 🔌 Serial Monitor
